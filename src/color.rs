@@ -11,6 +11,13 @@ impl Color {
             (b * 255.999) as u8,
         )
     }
+
+    pub fn from_mix(c1: (Color, f64), c2: (Color, f64)) -> Color {
+        let r = (c1.0.0 as f64 * c1.1 + c2.0.0 as f64 * c2.1) as u8;
+        let g = (c1.0.1 as f64 * c1.1 + c2.0.1 as f64 * c2.1) as u8;
+        let b = (c1.0.2 as f64 * c1.1 + c2.0.2 as f64 * c2.1) as u8;
+        Color(r, g, b)
+    }
 }
 
 pub fn write_color(buf: &mut String, c: &Color) {
