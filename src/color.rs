@@ -18,8 +18,19 @@ impl Color {
         let b = (c1.0.2 as f64 * c1.1 + c2.0.2 as f64 * c2.1) as u8;
         Color(r, g, b)
     }
+
+    pub fn average(colors: Vec<Color>) -> Color {
+        let n = colors.len() as u64;
+        let (mut r, mut g, mut b) = (0u64, 0u64, 0u64);
+        for c in colors {
+            r += c.0 as u64;
+            g += c.1 as u64;
+            b += c.2 as u64;
+        }
+        Color((r / n) as u8, (g / n) as u8, (b / n) as u8)
+    }
 }
 
 pub fn write_color(buf: &mut String, c: &Color) {
-    writeln!(buf, "{} {} {}", c.0, c.1, c.2).unwrap();
+    writeln!(buf, "{} {} {}", c.0, c.1, c.2,).unwrap();
 }

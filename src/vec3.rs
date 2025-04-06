@@ -3,7 +3,6 @@ use std::{
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub},
 };
 
-#[allow(unused)]
 #[derive(Default, Debug, Clone, Copy)]
 pub struct Vec3(pub f64, pub f64, pub f64);
 
