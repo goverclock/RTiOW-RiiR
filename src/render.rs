@@ -10,6 +10,7 @@ pub struct Render {
     img_width: u64,
     img_height: u64,
     samples_per_pixel: usize,
+    max_depth: usize,
     _focal_length: f64,
     _viewport_height: f64,
     _viewport_width: f64,
@@ -42,6 +43,7 @@ impl Render {
             img_width,
             img_height,
             samples_per_pixel: 10,
+            max_depth: 50,
             _focal_length: focal_length,
             _viewport_height: viewport_height,
             _viewport_width: viewport_width,
@@ -73,7 +75,7 @@ impl Render {
                 let mut colors = vec![];
                 for _ in 0..self.samples_per_pixel {
                     let ray = self.get_random_sample_ray(i, j);
-                    colors.push(ray.ray_color(world));
+                    colors.push(ray.ray_color(self.max_depth, world));
                 }
                 write_color(&mut content, &Color::average(colors));
             }

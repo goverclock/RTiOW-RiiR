@@ -3,6 +3,8 @@ use std::{
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub},
 };
 
+use rand::Rng;
+
 #[derive(Default, Debug, Clone, Copy)]
 pub struct Vec3(pub f64, pub f64, pub f64);
 
@@ -64,6 +66,41 @@ impl fmt::Display for Vec3 {
 
 #[allow(unused)]
 impl Vec3 {
+    pub fn random_unit_vector() -> Self {
+        loop {
+            let p = Self::random(-1f64, 1f64);
+            let lensq = p.length_squared();
+            if lensq <= 1f64 && 1e-160 < lensq {
+                break p / f64::sqrt(lensq);
+            }
+        }
+    }
+
+    pub fn random_on_hemisphere(normal: &Vec3) -> Vec3 {
+        let on_unit_sphere = Self::random_unit_vector();
+        if on_unit_sphere.dot(normal) > 0.0 {
+            on_unit_sphere
+        } else {
+            on_unit_sphere * -1f64
+        }
+    }
+
+    pub fn random_01() -> Self {
+        Self(
+            rand::rng().random_range(0f64..1f64),
+            rand::rng().random_range(0f64..1f64),
+            rand::rng().random_range(0f64..1f64),
+        )
+    }
+
+    pub fn random(min: f64, max: f64) -> Self {
+        Self(
+            rand::rng().random_range(min..=max),
+            rand::rng().random_range(min..=max),
+            rand::rng().random_range(min..=max),
+        )
+    }
+
     pub fn length(&self) -> f64 {
         f64::sqrt(self.length_squared())
     }
